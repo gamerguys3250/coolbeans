@@ -1,131 +1,63 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-```
-<title>Client Launcher</title>
-
-<link rel="stylesheet" href="style.css">
-```
-
+    <title>Client Launcher</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div class="background" aria-hidden="true"></div>
+    <main class="launcher">
+        <header class="header">
+            <div class="logo" aria-hidden="true">⚡</div>
+            <div>
+                <h1>Client Launcher</h1>
+                <p>Select a client and launch it.</p>
+            </div>
+        </header>
+        <section class="form" aria-labelledby="client-label">
+            <label id="client-label" for="clientSelect">SELECT CLIENT</label>
+            <div class="select-wrapper">
+                <select id="clientSelect">
+                    <option value="" selected disabled>Choose a client...</option>
+                    <option value="Resent.html">Resent</option>
+                    <option value="Tuff.html">Tuff</option>
+                    <option value="Astra.html">Astra</option>
+                </select>
+                <span class="arrow" aria-hidden="true">⌄</span>
+            </div>
+            <button id="launchButton" type="button" disabled>
+                <span>Launch Client</span>
+                <span class="launch-icon" aria-hidden="true">→</span>
+            </button>
+        </section>
+        <footer class="footer">
+            <div class="status" aria-live="polite">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span id="statusText">Ready</span>
+            </div>
+            <span class="version">Launcher v1.0</span>
+        </footer>
+    </main>
+    <script>
+        const clientSelect = document.getElementById("clientSelect");
+        const launchButton = document.getElementById("launchButton");
+        const statusText = document.getElementById("statusText");
 
-```
-<div class="background"></div>
+        clientSelect.addEventListener("change", () => {
+            const hasClient = Boolean(clientSelect.value);
+            launchButton.disabled = !hasClient;
+            statusText.textContent = hasClient ? "Client selected" : "Ready";
+        });
 
-<main class="launcher">
+        launchButton.addEventListener("click", () => {
+            const client = clientSelect.value;
+            if (!client) return;
 
-    <div class="header">
-
-        <div class="logo">
-            ⚡
-        </div>
-
-        <div>
-            <h1>Client Launcher</h1>
-            <p>Select a client and launch it.</p>
-        </div>
-
-    </div>
-
-    <div class="form">
-
-        <label for="clientSelect">
-            SELECT CLIENT
-        </label>
-
-        <div class="select-wrapper">
-
-            <select id="clientSelect">
-
-                <option value="" selected disabled>
-                    Choose a client...
-                </option>
-
-                <option value="hioadhoaw.html">
-                    Hioadhoaw
-                </option>
-
-                <option value="hoijsoijdd.html">
-                    Hoijsoijdd
-                </option>
-
-            </select>
-
-            <span class="arrow">⌄</span>
-
-        </div>
-
-        <button id="launchButton" disabled>
-            <span>Launch Client</span>
-            <span class="launch-icon">→</span>
-        </button>
-
-    </div>
-
-    <div class="footer">
-
-        <div class="status">
-            <span class="status-dot"></span>
-            <span id="statusText">Ready</span>
-        </div>
-
-        <span class="version">
-            Launcher v1.0
-        </span>
-
-    </div>
-
-</main>
-
-<script>
-
-    const clientSelect =
-        document.getElementById("clientSelect");
-
-    const launchButton =
-        document.getElementById("launchButton");
-
-    const statusText =
-        document.getElementById("statusText");
-
-
-    clientSelect.addEventListener("change", () => {
-
-        if (clientSelect.value) {
-
-            launchButton.disabled = false;
-            statusText.textContent = "Client selected";
-
-        } else {
-
-            launchButton.disabled = true;
-            statusText.textContent = "Ready";
-
-        }
-
-    });
-
-
-    launchButton.addEventListener("click", () => {
-
-        const client = clientSelect.value;
-
-        if (!client) return;
-
-        statusText.textContent = "Launching...";
-
-        window.location.href = "clients/" + client;
-
-    });
-
-</script>
-```
-
+            statusText.textContent = "Launching...";
+            window.location.href = `./clients/${encodeURIComponent(client)}`;
+        });
+    </script>
 </body>
 </html>
